@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+body {
+  margin: 0;
+  font-family: "Lato", serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.toggle-container {
+  animation: FadeInOut 1s;
+}
+
+/* For Webkit-based browsers (Chrome, Safari) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* For Internet Explorer & Edge */
+.no-scrollbar {
+  -ms-overflow-style: none;
+}
+
+
+.inputWrapper{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.loginWrapper{
+  animation: FadeInOut 1s;
+  display: flex;
+  height: 100vh;
+}
+
+.loginLeftPaneBox
+{
+  margin: 0px auto;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0px;
+  right: 0px;
+
+}
+
+
+.loginLeftPane{
+  position: relative;
+  flex: 3.5;
+  background-color: #fff;
+}
+
+.loginRightPane{
+  position: relative;
+  flex: 6.5;
+}
+
+
+.loaderBoxContainer{
+  position: absolute;
+  z-index: 100;
+  top:0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.dropdownBox {
+  animation: FadeInOut 1s;
+}
+
+.container{
+  animation: FadeInOut 1s;
+  margin-bottom: 40px;
+  border-radius: 10px;
+}
+
+.loaderBoxWrapper
+{
+  animation: FadeInOut 0.3s;
+  background-color: #fff;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30%;
+  margin: 0px auto;
+  height: 30vh;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+
+.inputFieldOne
+{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  background-color:#fff;
+  padding-top: 0px;
+}
+
+.inputFieldFour
+{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  grid-row-gap:15px;
+  background-color:#fff;
+  padding-top: 0px;
+}
+
+.inputFieldTask
+{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:20px;
+  padding-top: 0px;
+  background-color:#fff;
+  min-height: 55vh;
+}
+
+.dButton{
+  display: flex;
+}
+
+.inputFieldTwo
+{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  background-color:#fff;
+  padding-top:0px
+}
+
+.inputFieldThree
+{
+  display:grid;
+  grid-template-columns:repeat(1,1fr);
+  grid-row-gap:10px;
+  grid-column-gap:5px;
+  background-color:#fff;
+  padding-top: '10px';
+}
+.imageLoginBg{
+  width: 98%;
+  height: 96vh;
+  border-radius:40px;
+}
+
+.dropdownButton
+{
+  border-right: 5px solid rgba(0,0,0,0);
+}
+
+.dropdownButton:hover
+{
+  background: rgb(227,114,106);
+  background: linear-gradient(90deg, rgba(227,114,106,0.2847732843137255) 33%, rgba(201,57,42,0.7665660014005602) 76%);
+  border-right: 5px solid red;
+}
+
+.profilePopoverItem:hover
+{
+  background-color: #F2F3F4;
+}
+
+.menuBar{
+  display: none;
+}
+
+.leftDashboard
+{
+  animation: SlideRight 0.5s;
+}
+
+.menuBarTwo
+{
+  margin-left:0px;
+}
+
+@media(max-width:1090px)
+{
+  .dButton{
+    display: none;
+  }
+
+  .menuBar{
+    display: block;
+  }
+
+  .menuBarTwo
+{
+  margin-left:0px;
+}
+
+  .leftDashboard{
+    display: none;
+    z-index: 400;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    bottom:0px;
+    width: 30%;
+    height: 100vh;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    background-color: #000;
+  }
+}
+
+@media(max-width:920px)
+{
+
+  .imageLoginBg{
+    width: 100%;
+    height: 100vh;
+    border-radius:0px;
+  }
+  
+  .loginLeftPane
+  {
+    z-index: 40;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    transform: translateY(-50%);
+  }
+  
+  .leftDashboard{
+    display: none;
+    z-index: 400;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    bottom:0px;
+    width: 30%;
+    height: 100vh;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    background-color: #000;
+  }
+
+  .loginLeftPane .loginLeftPaneBox
+  {
+    width: 50%;
+    background-color:white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .inputFieldOne
+{
+  display:grid;
+  grid-template-columns:repeat(1,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  background-color:#fff; 
+}
+
+.inputFieldFour
+{
+  display:grid;
+  grid-template-columns:repeat(1,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  grid-row-gap:15px;
+  background-color:#fff;
+}
+
+.inputFieldTask
+{
+  display:grid;
+  grid-template-columns:repeat(1,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  background-color:#fff;
+  min-height: 55vh;
+}
+
+.inputFieldTwo
+{
+  display:grid;
+  grid-template-columns:repeat(1,1fr);
+  padding:20px;
+  grid-column-gap:15px;
+  background-color:#fff;
+  padding-top:0px;
+  grid-row-gap:15px;
+}
+
+}
+
+
+@media(max-width:600px)
+{
+  .loginLeftPane .loginLeftPaneBox
+  {
+    width: 70%;
+  }
+
+  .leftDashboard{
+    display: none;
+    z-index: 400;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    bottom:0px;
+    width: 50%;
+    height: 100vh;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    background-color: #000;
+  }
+}
+
+@media(max-width:500px)
+{
+  .loginLeftPane .loginLeftPaneBox
+  {
+    width: 70%;
+  }
+
+  .leftDashboard{
+    display: none;
+    z-index: 400;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    bottom:0px;
+    width: 70%;
+    height: 100vh;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    background-color: #000;
+  }
+}
+
+@keyframes FadeInOut {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+
+@keyframes SlideRight {
+  from{
+    left: -30%
+  }
+  to{
+    left:0%
+  }
+}
