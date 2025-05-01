@@ -46,12 +46,24 @@ const bull = (
 
 function BasicCard() {
   const {control, handleSubmit, formState:{errors}, setValue } = useForm();
-  const [convo,setConvo] = React.useState([]);
+  const [convo,setConvo] = React.useState([]);  
+  const scrollRef = React.useRef(null);
+
+  // Scroll to bottom when convo state updates
+  React.useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [convo]); // This effect runs every time `convo` updates
+
 
   const sampleData = ["hello","bye","Tell me about Shield Pension Trust?","How do I join Shield Pension Trust?","What happens to my pension if I leave the company?","How is my pension invested?","Can I transfer my pension from another scheme to the Shield Pension Trust?"];
 
   const fetchData = (data) => {
     // setLoader(true);
+
+    console.log(data);
+    
      
  
          const controller = new AbortController();
@@ -66,7 +78,7 @@ function BasicCard() {
  
          const formData = new FormData();
          //formData.append('token', encryptedUserData);
-         formData.append('message', data.text);
+         formData.append('message', data.text || '');
  
  
  
@@ -86,13 +98,18 @@ function BasicCard() {
         ////console.log(jsonData);
         
         
-        if (jsonData.status != 0) 
-        {
-          setConvo([...convo,{id: convo.length+1, name:'user', message:data.text},{id: convo.length+1, name:'chatbot', message:jsonData.response}]);
+
+        if (jsonData.status !== 0) {
+          setConvo(prevConvo => [
+            ...prevConvo, 
+            { id: prevConvo.length + 1, name: 'user', message: data.text },
+            { id: prevConvo.length + 2, name: 'chatbot', message: jsonData.response }
+          ]);
         }
         //setConvo([...convo,{id: convo.length+1, name:'user', message:data.text}]);
         
         ////console.table(jsonData.data);
+      
 
          
          clearTimeout(timeoutId); // Clear the timeout if an error occurs
@@ -101,6 +118,7 @@ function BasicCard() {
      .catch((error) => {
        clearTimeout(timeoutId); // Clear the timeout if an error occurs
       //  setLoader(false);
+      
        ////////console.log(error);
      });
  }
@@ -141,10 +159,14 @@ fetch(process.env.REACT_APP_CHATBOT_URL, requestOptions)
    ////console.log(jsonData);
    
    
-   if (jsonData.status != 0) 
-   {
-     setConvo([...convo,{id: convo.length+1, name:'user', message:data},{id: convo.length+1, name:'chatbot', message:jsonData.response}]);
-   }
+
+   if (jsonData.status !== 0) {
+    setConvo(prevConvo => [
+      ...prevConvo, 
+      { id: prevConvo.length + 1, name: 'user', message: data },
+      { id: prevConvo.length + 2, name: 'chatbot', message: jsonData.response }
+    ]);
+  }
    //setConvo([...convo,{id: convo.length+1, name:'user', message:data.text}]);
    
    ////console.table(jsonData.data);
@@ -173,14 +195,14 @@ fetch(process.env.REACT_APP_CHATBOT_URL, requestOptions)
     </div>
 
       <CardContent>
-      <div style={{height:'25vh',overflowY:'scroll'}}>
+      <div ref={scrollRef} style={{height:'25vh',overflowY:'scroll'}}>
       {
         Array.isArray(convo) && convo.length > 0 ? 
         convo.map((val,index)=>{
           return(
         <div key={index}>
-        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-          {val.name}
+        <Typography style={{ color: val.name == 'user' ? 'blue' : 'orange' }} gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+          {val.name.toUpperCase()}
         </Typography>
         <Typography gutterBottom style={{borderBottom:'1px solid #E8E8E8'}} variant="body2">
           {val.message}

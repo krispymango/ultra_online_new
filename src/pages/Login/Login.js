@@ -508,7 +508,7 @@ null
           />
       <h2></h2>
       <CustomButton onClick={handleSubmit(fetchData)} text="Login"/>
-      <div style={{display:'block',marginTop:'20px'}}><a onClick={()=>setShowForgotPassword(true)} style={{textAlign:'center',color:'blue',cursor:'pointer'}}>Forgot Password?</a></div>
+      <div style={{display:'block',marginTop:'20px'}}><a onClick={()=>setShowForgotPassword(true)} style={{textAlign:'center',textDecoration:'underline',color:'blue',cursor:'pointer'}}>Forgot Password?</a></div>
       </div>
 
       </div>
