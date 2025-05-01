@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {useForm,Controller} from 'react-hook-form';
 import CustomInput from '../../components/CustomInput';
+import CustomSelect from '../../components/CustomSelect';
 import CustomButton from '../../components/CustomButton';
 import Logo from '../../assets/img/logo_bg/logoTwo.png';
 import LoginImg from '../../assets/img/login_bg/shieldPensions.jpg';
@@ -15,10 +16,12 @@ import { FaApple, FaWindows } from 'react-icons/fa';
 
 
 function Login({feedback}) {
-  const {control, handleSubmit, formState:{errors}} = useForm();
+  const {control, handleSubmit, formState:{errors}, setValue, getValues} = useForm();
   const [loader,setLoader] = useState(false);
   const [errBox,seterrBox] = useState(0);
   const [showFirstLogin,setShowFirstLogin] = useState(false);
+  const [showForgotPassword,setShowForgotPassword] = useState(false);
+  const [showRec,setShowRec] = useState(false);
   const [errorMessage,setErrorMessage] = useState('');
   const [usrDat,setUsrDat] = useState('');
 
@@ -245,7 +248,141 @@ useEffect(() => {
 }, []);
 
 
+const SetForgotPasswordOption = (data) => {
+if(data == 1)
+{
+  setShowRec('sms');
+  setValue('phone','');
+  setValue('email','');
+}
+else if(data == 2)
+{
+  setShowRec('email');
+  setValue('phone','');
+  setValue('email','');
+}
+else
+{
+  setShowRec(false);
+  setValue('phone','');
+  setValue('email','');
+}
+}
 
+
+const sendPasswordRecovery = () => {
+  var sphone = getValues('phone');
+  var semail = getValues('email');
+if (sphone && sphone > 5) 
+{
+  
+  setLoader(true);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+          controller.abort();
+      }, 15000);
+
+      
+
+      const formData = new FormData();
+      formData.append('reset_option', 1);
+      formData.append('phone', sphone ? sphone : '');
+
+
+
+        const requestOptions = {
+          method: 'POST',
+          body: formData,
+          signal: controller.signal // Associate the AbortController's signal with the fetch
+        };
+
+
+
+
+  fetch(process.env.REACT_APP_API_URL+'/resetPasswordLink', requestOptions)
+  .then((response) => response.json())
+    .then((jsonData) => {
+      ////console.table(jsonData);
+      clearTimeout(timeoutId); // Clear the timeout if an error occurs
+      setErrorBox(0);
+      if(jsonData.status !== 0)
+      {//console.log(jsonData);
+        setErrorMessage(jsonData.message ? jsonData.message : 'If this phone number exists in our system, we’ve sent a reset link. Please check your inbox.');
+        setErrorBox(1);
+      }
+      else
+      {
+        setErrorMessage(jsonData.message ? jsonData.message : 'Error, Please try again!');
+        setErrorBox(2);
+      }
+      setLoader(false);
+    })
+  .catch((error) => {
+    clearTimeout(timeoutId); // Clear the timeout if an error occurs
+    setErrorMessage('Error, Please try again!');
+    setErrorBox(2);
+    setLoader(false);
+    ////////console.log(error);
+  });
+} 
+else if(semail && semail > 5){
+setLoader(true);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, 15000);
+
+    
+
+    const formData = new FormData();
+    formData.append('reset_option', 2);
+    formData.append('email', semail ? semail : '');
+
+
+
+      const requestOptions = {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal // Associate the AbortController's signal with the fetch
+      };
+
+
+
+
+fetch(process.env.REACT_APP_API_URL+'/resetPasswordLink', requestOptions)
+.then((response) => response.json())
+  .then((jsonData) => {
+    ////console.table(jsonData);
+    clearTimeout(timeoutId); // Clear the timeout if an error occurs
+    setErrorBox(0);
+    if(jsonData.status !== 0)
+    {
+      setErrorMessage(jsonData.message ? jsonData.message : 'If this email exists in our system, we’ve sent a reset link. Please check your inbox.');
+      setErrorBox(1);
+    }
+    else
+    {
+      setErrorMessage(jsonData.message ? jsonData.message : 'Error, Please try again!');
+      setErrorBox(2);
+    }
+    setLoader(false);
+  })
+.catch((error) => {
+  clearTimeout(timeoutId); // Clear the timeout if an error occurs
+  setErrorMessage('Error, Please try again!');
+  setErrorBox(2);
+  setLoader(false);
+  ////////console.log(error);
+});
+}
+else {
+  setErrorMessage('Error, Please try again!');
+  setErrorBox(2);
+}
+  
+}
 
 
 
@@ -254,6 +391,57 @@ useEffect(() => {
     <>
         { loader ? <CustomLoader/> : null}
         {errBox == 1 ? <CustomMessageBox transition="down" display={()=>seterrBox(false)} type="success" horizontal="center" message={errorMessage} /> : errBox == 2 ? <CustomMessageBox transition="down" type="error" display={()=>seterrBox(false)} horizontal="center" message={errorMessage} /> : null }
+
+        {
+        showForgotPassword ? 
+        <CustomModal onClick={()=>{setShowRec(false);setShowForgotPassword(false)}} heading="Forgot Password?"
+        render={
+        <>
+        <h4>Choose Password Reset Option</h4>
+    <CustomSelect
+  rules={{
+    required: 'Password Reset option is required',
+      }}
+      onChange={SetForgotPasswordOption}
+      data={[
+        {label:'SMS',value:1},
+        {label:'Email',value:2}
+      ]}
+      placeholder="..."
+      control={control} 
+      name="forgot_password"/>
+
+{
+  showRec && showRec == 'sms' ? 
+  <div style={{borderTop:'1px solid #D1D1D1'}}>
+<CustomInput 
+  rules={{
+    required: 'Phone Number is required',
+      }}
+      placeholder="eg: 024XXXXXX"
+      control={control} 
+      name="phone"/>
+
+<CustomButton endIcon={<SendIcon/>} onClick={()=>sendPasswordRecovery()} text="Submit"/>
+</div>
+: showRec && showRec == 'email' ?
+<div style={{borderTop:'1px solid #D1D1D1'}}>
+<CustomInput 
+  rules={{
+    required: 'Email is required',
+      }}
+      placeholder="eg: example@mail.com"
+      control={control} 
+      name="email"/>
+
+<CustomButton endIcon={<SendIcon/>} onClick={()=>sendPasswordRecovery()} text="Submit"/>
+</div> :
+null
+}
+
+        </>}
+        /> : null
+    }
 
         {
         showFirstLogin ? 
@@ -320,6 +508,7 @@ useEffect(() => {
           />
       <h2></h2>
       <CustomButton onClick={handleSubmit(fetchData)} text="Login"/>
+      <div style={{display:'block',marginTop:'20px'}}><a onClick={()=>setShowForgotPassword(true)} style={{textAlign:'center',color:'blue',cursor:'pointer'}}>Forgot Password?</a></div>
       </div>
 
       </div>
