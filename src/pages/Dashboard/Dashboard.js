@@ -12,7 +12,7 @@ import { FaFilePdf, FaInfoCircle, FaRegFilePdf } from 'react-icons/fa';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-
+import Lottie from "lottie-react";
 import Pagination from '@mui/material/Pagination';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -24,6 +24,8 @@ import CurrentValueLogo from '../../assets/img/icons/financial-balance.png';
 import ReturnsLogo from '../../assets/img/icons/pie-chart.png';
 import Stack from '@mui/material/Stack';
 
+
+import groovyWalkAnimation from "../../assets/lotties/man-waiving-hand.json";
 
 function Dashboard({blogpost}) {
     const {control, handleSubmit, formState:{errors}, setValue } = useForm();
@@ -314,7 +316,8 @@ function Dashboard({blogpost}) {
     { loader ? <CustomLoader/> : null}
         {errBox == 1 ? <CustomMessageBox transition="down" display={()=>seterrBox(false)} type="success" horizontal="right" message={errorMessage} /> : errBox == 2 ? <CustomMessageBox transition="down" type="error" display={()=>seterrBox(false)} horizontal="right" message={errorMessage} /> : null }
         <div style={{padding:'20px',paddingBottom:'10px',display:'flex',alignItems:'center'}}>
-            <h1> <span style={{color:'#A6ACAF'}}>{getGreeting()}, </span> </h1> <h1 style={{marginLeft:'5px'}}>{profileData.fullname || null } !</h1> 
+            <h1><span style={{color:'#A6ACAF'}}>{getGreeting()}, </span> </h1> <h1 style={{marginLeft:'5px'}}>{profileData.fullname || null } !</h1> 
+            {/* <span style={{display:'flex'}}><Lottie style={{width:'30%'}} animationData={groovyWalkAnimation} /></span> */}
         </div>
 
         <div style={{margin:'0px auto',width:'85%',marginBottom:'10px',paddingBottom:'40px',borderBottom:'1px solid #D1D1D1'}}>
