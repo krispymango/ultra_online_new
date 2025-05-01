@@ -143,7 +143,7 @@ fetch(process.env.REACT_APP_CHATBOT_URL, requestOptions)
    
    if (jsonData.status != 0) 
    {
-     setConvo([...convo,{id: convo.length+1, name:'user', message:data.text},{id: convo.length+1, name:'chatbot', message:jsonData.response}]);
+     setConvo([...convo,{id: convo.length+1, name:'user', message:data},{id: convo.length+1, name:'chatbot', message:jsonData.response}]);
    }
    //setConvo([...convo,{id: convo.length+1, name:'user', message:data.text}]);
    

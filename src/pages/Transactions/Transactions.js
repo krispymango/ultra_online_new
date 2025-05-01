@@ -258,7 +258,7 @@ fetch(process.env.REACT_APP_API_URL+'/transactions', requestOptions)
                 color="error" endIcon={<FaTimes/>}/>
                 </div>
                 <div style={{flexGrow:1,flexBasis:'30px'}}>
-                <CustomButton disabled={showPrint} href={!showPrint && printData.scheme ? `http://41.210.32.16/bpt/app/assets/printables/statement_three?accountno=${printData.acc}&sid=${printData.scheme}&d_f=${printData.from_date}&d_t=${printData.to_date}` : null} color={"success"}  text="Print" endIcon={<FaPrint/> }/>
+                <CustomButton disabled={showPrint} href={!showPrint && printData.scheme ? `${process.env.REACT_APP_STATEMENT_URL}?accountno=${printData.acc}&sid=${printData.scheme}&d_f=${printData.from_date}&d_t=${printData.to_date}` : null} color={"success"}  text="Print" endIcon={<FaPrint/> }/>
                 </div>
           </div>
         </div>
